@@ -1,24 +1,17 @@
-import { createSigner } from 'fast-jwt';
-import { COOKIE_NAME } from 'service/constants';
 import { expect, test } from 'vitest';
-import { createUserClient, noCookieClient } from './apiClient';
-import { DELETE, GET, POST } from './utils';
+import {  noCookieClient } from './apiClient';
+import {  GET, POST } from './utils';
 
-test(GET(noCookieClient), async () => {
-  const { userClient, cleanUp } = await createUserClient();
-  const res = await userClient.$get();
+test(GET(noCookieClient.novel), async () => {
+  const res = await noCookieClient.novel.$get();
 
-  expect(res).toEqual('');
-
-  await cleanUp();
+  expect(res).toEqual('Hello');
 });
 
 test(POST(noCookieClient.novel), async () => {
-  const { userClient, cleanUp } = await createUserClient();
-  const aozoraUrl = 'abc'
-  const res = await noCookieClient.novel.$post({ body: { aozoraUrl }})
+  const aozoraUrl = 'abc';
+  const res = await noCookieClient.novel.$post({ body: { aozoraUrl } })
 
   expect(res).toEqual(aozoraUrl);
 
-  await cleanUp();
 });
